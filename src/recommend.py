@@ -15,7 +15,8 @@ logging.basicConfig(
 logging.info("🔁 Loading data...")
 try:
     df = joblib.load('src/df_cleaned.pkl')
-    cosine_sim = joblib.load('src/cosine_sim.pkl')
+    tfidf_matrix = joblib.load('src/tfidf_matrix.pkl')
+    from sklearn.metrics.pairwise import cosine_similarity
     logging.info("✅ Data loaded successfully.")
 except Exception as e:
     logging.error("❌ Failed to load required files: %s", str(e))
@@ -29,7 +30,14 @@ def recommend_songs(song_name, top_n=5):
         logging.warning("⚠️ Song not found in dataset.")
         return None
     idx = idx[0]
-    sim_scores = list(enumerate(cosine_sim[idx]))
+    sim_scores = list(
+        enumerate(
+            cosine_similarity(
+                tfidf_matrix[idx],
+                tfidf_matrix
+            ).flatten()
+        )
+    )
     sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)[1:top_n + 1]
     song_indices = [i[0] for i in sim_scores]
     logging.info("✅ Top %d recommendations ready.", top_n)
