@@ -23,3 +23,7 @@ The system analyzes a music dataset and extracts important song features. Using 
 * Data Preprocessing
 * Feature Extraction
 * Recommendation Algorithms
+
+# OUTPUT #
+
+<img width="2559" height="1332" alt="image" src="https://github.com/user-attachments/assets/6a265ed8-213f-428a-a7ac-da1c9c824325" />
